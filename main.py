@@ -1,5 +1,5 @@
 from interface import Interface
 
-menu = Interface()
-
-menu.run()
+if __name__ == "__main__":
+    menu = Interface()
+    menu.run()
