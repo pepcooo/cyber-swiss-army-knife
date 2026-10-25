@@ -1,4 +1,9 @@
+from modules.hash import Hash
+
 class Interface:
+    __modules = {
+        "hash": Hash
+    }
     def __init__(self):
         print("hello")
 
@@ -13,16 +18,13 @@ class Interface:
             chosen_option = input()
             match chosen_option:
                 case "encode":
-                    break
-
+                    pass
                 case "decode":
-                    break
-
+                    pass
                 case "web-request":
-                    break
-
+                    pass
                 case "hash":
-                    break
+                    Hash()
 
                 case "quit":
                     break
