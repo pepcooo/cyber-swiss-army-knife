@@ -44,16 +44,26 @@ class Hash:
 
 
     def crack_hash(self):
-        print("Please enter the hash you wish to crack followed by the name of hashing algorithm and a path to the wordlist file.")
-        user_input = input().strip()
-
-        if not user_input:
-            print("ERROR: Empty string.")
+        print("Please enter the hash you wish to crack.")
+        hash_to_crack = input().strip().split(" ")[0]
+        if not hash_to_crack:
+            print("ERROR: Invalid hash provided.")
             return 1
 
-        hash_to_crack = user_input.split(" ")[0]
-        hashing_algorithm = user_input.split(" ")[1]
-        wordlist_path = user_input.split(" ")[2]
+        print("Please enter the hashing algorithm.")
+        print("Supported hashing algorithms:")
+        print(self.__hashing_algorithms)
+        hashing_algorithm = input().strip().split(" ")[0]
+        if not hashing_algorithm or hashing_algorithm not in self.__hashing_algorithms:
+            print("ERROR: Invalid algorithm provided.")
+            return 1
+
+        print("Please enter the path to the wordlist.")
+        wordlist_path = input().strip().split(" ")[0]
+        if not wordlist_path:
+            print("ERROR: Invalid wordlist provided.")
+            return 1
+
 
         try:
             with open(wordlist_path, "r") as f:
