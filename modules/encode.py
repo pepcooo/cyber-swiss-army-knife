@@ -1,0 +1,45 @@
+import urllib.parse
+import base64
+
+class Encode:
+    __encodings = [
+        "base64",
+        "url"
+    ]
+    def __init__(self):
+        self.__options = {
+            1: self.encode
+        }
+        print("You have chosen the encode module.")
+        self.run()
+
+
+    def run(self):
+        print("Please specify what you wish to do by entering the appropriate number.")
+        print("\t1 - encode text")
+
+        option = input().strip()
+        print(self.__options[int(option)]())
+
+    def encode(self):
+        print("Please enter the text to encode.")
+        text = input().strip()
+
+        print("Please specify the encoding.")
+        print("Available encodings:")
+        print(self.__encodings)
+        encoding = input().strip()
+
+        if encoding not in self.__encodings:
+            print("ERROR: Unrecognized encoding.")
+            return 1
+
+        result = ""
+        match encoding:
+            case "base64":
+                result = base64.b64encode(text.encode()).decode()
+
+            case "url":
+                result = urllib.parse.quote(text.encode())
+
+        return result

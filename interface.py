@@ -1,8 +1,11 @@
 from modules.hash import Hash
+from modules.encode import Encode
+
 
 class Interface:
     __modules = {
-        "hash": Hash
+        "hash": Hash,
+        "encode": Encode
     }
     def __init__(self):
         print("hello")
@@ -11,21 +14,18 @@ class Interface:
         while True:
             print("Please choose the desired module:")
             print("\tencode")
-            print("\tdecode")
             print("\tweb-request")
             print("\thash")
             print("\tquit")
-            chosen_option = input()
+            chosen_option = input().strip().lower()
             match chosen_option:
                 case "encode":
-                    pass
-                case "decode":
-                    pass
+                    Encode()
                 case "web-request":
                     pass
                 case "hash":
                     Hash()
-
+                    break
                 case "quit":
                     break
 
