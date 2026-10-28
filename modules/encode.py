@@ -4,7 +4,8 @@ import base64
 class Encode:
     __encodings = [
         "base64",
-        "url"
+        "url",
+        "hex"
     ]
     def __init__(self):
         self.__options = {
@@ -44,6 +45,9 @@ class Encode:
             case "url":
                 result = urllib.parse.quote(text.encode())
 
+            case "hex":
+                result = bytes.hex(text.encode())
+
         return result
 
 
@@ -67,5 +71,8 @@ class Encode:
 
             case "url":
                 result = urllib.parse.unquote(text.encode())
+
+            case "hex":
+                result = bytes.fromhex(text).decode()
 
         return result
