@@ -7,7 +7,11 @@ class Encode:
         "url",
         "utf-8",
         "utf-16",
-        "utf-32"
+        "utf-32",
+        "latin-1",
+        "latin-2",
+        "windows-1252",
+        "windows-1250"
     ]
     def __init__(self):
         self.__options = {
@@ -56,6 +60,18 @@ class Encode:
             case "utf-32":
                 result = text.encode("utf-32").hex()
 
+            case "latin-1":
+                result = text.encode("latin-1").hex()
+
+            case "latin-2":
+                result = text.encode("iso8859-2").hex()
+
+            case "windows-1252":
+                result = text.encode("cp1252").hex()
+
+            case "windows-1250":
+                result = text.encode("cp1250").hex()
+
         return result
 
 
@@ -88,5 +104,17 @@ class Encode:
 
             case "utf-32":
                 result = bytes.fromhex(text).decode("utf-32")
+
+            case "latin-1":
+                result = bytes.fromhex(text).decode("latin-1")
+
+            case "latin-2":
+                result = bytes.fromhex(text).decode("iso8859-2")
+
+            case "windows-1252":
+                result = bytes.fromhex(text).decode("cp1252")
+
+            case "windows-1250":
+                result = bytes.fromhex(text).decode("cp1250")
 
         return result
