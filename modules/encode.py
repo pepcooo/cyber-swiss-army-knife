@@ -5,7 +5,9 @@ class Encode:
     __encodings = [
         "base64",
         "url",
-        "hex"
+        "utf-8",
+        "utf-16",
+        "utf-32"
     ]
     def __init__(self):
         self.__options = {
@@ -45,8 +47,14 @@ class Encode:
             case "url":
                 result = urllib.parse.quote(text.encode())
 
-            case "hex":
-                result = bytes.hex(text.encode())
+            case "utf-8":
+                result = text.encode("utf-8").hex()
+
+            case "utf-16":
+                result = text.encode("utf-16").hex()
+
+            case "utf-32":
+                result = text.encode("utf-32").hex()
 
         return result
 
@@ -72,7 +80,13 @@ class Encode:
             case "url":
                 result = urllib.parse.unquote(text.encode())
 
-            case "hex":
-                result = bytes.fromhex(text).decode()
+            case "utf-8":
+                result = bytes.fromhex(text).decode("utf-8")
+
+            case "utf-16":
+                result = bytes.fromhex(text).decode("utf-16")
+
+            case "utf-32":
+                result = bytes.fromhex(text).decode("utf-32")
 
         return result
