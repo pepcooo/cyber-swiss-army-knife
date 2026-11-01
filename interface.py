@@ -1,11 +1,13 @@
 from modules.hash import HashService, HashCLI
 from modules.encode import EncodeService, EncodeCLI
+from modules.web_request import WebRequestCLI, WebRequestService
 
 
 class Interface:
     __modules = {
         "hash": HashCLI,
-        "encode": EncodeCLI
+        "encode": EncodeCLI,
+        "web-request": WebRequestCLI
     }
     def __init__(self):
         print("hello")
@@ -25,7 +27,9 @@ class Interface:
                     cli.run()
 
                 case "web-request":
-                    pass
+                    service = WebRequestService()
+                    cli = WebRequestCLI(service)
+                    cli.run()
 
                 case "hash":
                     service = HashService()
