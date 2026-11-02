@@ -1,7 +1,7 @@
 from modules.hash import HashService, HashCLI
 from modules.encode import EncodeService, EncodeCLI
 from modules.web_request import WebRequestCLI, WebRequestService
-
+from modules.packet_sniffing import SniffingCLI, SniffingService
 
 class Interface:
     __modules = {
@@ -18,6 +18,7 @@ class Interface:
             print("\tencode")
             print("\tweb-request")
             print("\thash")
+            print("\tpacket-sniffing")
             print("\tquit")
             chosen_option = input().strip().lower()
             match chosen_option:
@@ -34,6 +35,11 @@ class Interface:
                 case "hash":
                     service = HashService()
                     cli = HashCLI(service)
+                    cli.run()
+
+                case "packet-sniffing":
+                    service = SniffingService()
+                    cli = SniffingCLI(service)
                     cli.run()
 
                 case "quit":
