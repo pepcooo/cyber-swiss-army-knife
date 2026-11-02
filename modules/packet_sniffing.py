@@ -1,5 +1,5 @@
 from scapy.all import sniff
-
+from datetime import datetime
 
 class SniffingService:
     def __init__(self):
@@ -7,11 +7,22 @@ class SniffingService:
 
 
     def sniff_packets(self):
+        timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+        filename = f"report_{timestamp}.txt"
         try:
-            sniff(prn=lambda packet: print(packet.summary()), count=self.__packet_count, store=False)
+            with open(filename, "w", encoding="utf-8") as f:
+                sniff(prn=lambda packet:
+                    (
+                        print(packet.summary(), flush=True, file=f),
+                        print(packet.summary())
+                    ),
+                    count=self.__packet_count,
+                    store=False)
 
         except KeyboardInterrupt:
-            return
+            print("Keyboard interrupt.")
+
+        print(f"\nFile saved as {filename}\n")
 
     def set_count(self, count):
         if not count.isdigit():
@@ -41,7 +52,7 @@ class SniffingCLI:
 
             if option not in ("1", "2", "3"):
                 print("ERROR: Please choose a viable option.")
-                return
+                continue
 
             try:
                 if option == "1":
