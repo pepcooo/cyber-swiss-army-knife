@@ -1,9 +1,20 @@
-from scapy.all import sniff
 from datetime import datetime
+from scapy.all import sniff, IP, IPv6, TCP, UDP, ICMP, ARP, Raw, Padding
+
 
 class SniffingService:
     def __init__(self):
         self.__packet_count = 0
+
+    def _format_packet(self, packet, file):
+        layers = [layer.__name__ for layer in packet.layers() if layer not in (Raw, Padding)]
+        proto_name = layers[-1].upper() if layers else "OTHER"
+
+        protocol = f"[{proto_name}] "
+        f_packet = protocol + packet.summary()
+
+        print(f_packet)
+        print(f_packet, flush=True, file=file)
 
 
     def sniff_packets(self):
@@ -13,14 +24,14 @@ class SniffingService:
             with open(filename, "w", encoding="utf-8") as f:
                 sniff(prn=lambda packet:
                     (
-                        print(packet.summary(), flush=True, file=f),
-                        print(packet.summary())
+                        self._format_packet(packet, f)
                     ),
                     count=self.__packet_count,
                     store=False)
 
+
         except KeyboardInterrupt:
-            print("Keyboard interrupt.")
+            pass
 
         print(f"\nFile saved as {filename}\n")
 
