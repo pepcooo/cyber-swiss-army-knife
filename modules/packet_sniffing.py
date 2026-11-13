@@ -1,10 +1,12 @@
 from datetime import datetime
 from scapy.all import sniff, IP, IPv6, TCP, UDP, ICMP, ARP, Raw, Padding
+from scapy.config import conf
 
 
 class SniffingService:
     def __init__(self):
         self.__packet_count = 0
+
 
     def _format_packet(self, packet, file):
         layers = [layer.__name__ for layer in packet.layers() if layer not in (Raw, Padding)]
@@ -18,14 +20,13 @@ class SniffingService:
 
 
     def sniff_packets(self):
+        conf.noenum.add(TCP.sport, TCP.dport, UDP.sport, UDP.dport)
+
         timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
         filename = f"report_{timestamp}.txt"
         try:
             with open(filename, "w", encoding="utf-8") as f:
-                sniff(prn=lambda packet:
-                    (
-                        self._format_packet(packet, f)
-                    ),
+                sniff(prn=lambda packet: self._format_packet(packet, f),
                     count=self.__packet_count,
                     store=False)
 
